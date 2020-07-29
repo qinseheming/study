@@ -18,6 +18,7 @@ public class Solution1365 {
         for (int i = 0; i < result.length; i++) {
 
         }
+        return result;
     }
 
 }

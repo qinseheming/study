@@ -1,6 +1,7 @@
 package com.yangming.data_structure.queue;
 
-import com.study.data_structure.array.Array;
+
+import com.yangming.data_structure.array.Array;
 
 /**
  * 基于动态数组的队列

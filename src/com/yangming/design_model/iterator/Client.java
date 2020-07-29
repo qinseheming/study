@@ -6,8 +6,7 @@ package com.yangming.design_model.iterator;
 public class Client {
 
     public static void main(String[] args) {
-        MyAggregate aggregate = new MyAggregate();
-        aggregate
+       
     }
 
 }

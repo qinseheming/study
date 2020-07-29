@@ -1,6 +1,7 @@
 package com.yangming.data_structure.stack;
 
-import com.study.data_structure.array.Array;
+
+import com.yangming.data_structure.array.Array;
 
 public class ArrayStack<E> implements Stack<E> {
 
