@@ -1,6 +1,8 @@
 package com.yangming.data_structure.tree;
 
+import java.util.Queue;
 import java.util.Stack;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 非递归方式实现二叉树
@@ -23,26 +25,24 @@ public class BinarySearchTreeNotRecursion<E extends Comparable<E>> extends Abstr
             return;
         }
         Node node = root;
-        Node left = root.left;
-        Node right = root.right;
+        Node pre = null;
         while (node != null) {
+            pre = node;
             if (e.compareTo(node.e) < 0) {
                 node = node.left;
-                left = node;
+            } else if (e.compareTo(node.e) > 0) {
+                node = node.right;
+            } else {
+                return;
             }
         }
-        if (e.compareTo(node.e) < 0) {
-            while (node.left != null) {
-                node = node.left;
-            }
+        node = new Node(e);
+        if (e.compareTo(pre.e) < 0) {
+            pre.left = node;
             size++;
-            node.left = new Node(e);
-        } else if (e.compareTo(node.e) > 0) {
-            while (node.right != null) {
-                node = node.right;
-            }
+        } else if (e.compareTo(pre.e) > 0) {
+            pre.right = node;
             size++;
-            node.right = new Node(e);
         }
     }
 
@@ -54,7 +54,7 @@ public class BinarySearchTreeNotRecursion<E extends Comparable<E>> extends Abstr
      */
     @Override
     public boolean contains(E e) {
-        return this.contains(root, e);
+        return false;
     }
 
 
@@ -64,9 +64,7 @@ public class BinarySearchTreeNotRecursion<E extends Comparable<E>> extends Abstr
     @Override
     public void preOrder() {
         Stack<Node> stack = new Stack<>();
-        if (root != null) {
-            stack.push(root);
-        }
+        stack.push(root);
         while (!stack.isEmpty()) {
             Node node = stack.pop();
             System.out.println(node.e);
@@ -92,60 +90,59 @@ public class BinarySearchTreeNotRecursion<E extends Comparable<E>> extends Abstr
      */
     @Override
     public void postOrder() {
-        this.postOrder(root);
-    }
 
-    private boolean contains(Node node, E e) {
-        if (node == null) {
-            return false;
-        }
-        if (e.compareTo(node.e) == 0) {
-            return true;
-        } else if (e.compareTo(node.e) < 0) {
-            return this.contains(node.left, e);
-        } else {
-            return this.contains(node.right, e);
-        }
-    }
-
-    private void postOrder(Node node) {
-        if (node == null) {
-            return;
-        }
-        this.postOrder(node.left);
-        this.postOrder(node.right);
-        System.out.println(node.e);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        this.preToString(root, 0, builder);
-        return builder.toString();
     }
 
     /**
-     * 前序遍历打印二叉树
-     *
-     * @param node    当前节点
-     * @param depth   当前节点所在层数
-     * @param builder 字符串
+     * 层序遍历
      */
-    private void preToString(Node node, int depth, StringBuilder builder) {
-        if (node == null) {
-            builder.append(this.generateDepthStr(depth)).append("null\n");
-            return;
+    @Override
+    void levelOrder() {
+        Queue<Node> queue = new LinkedBlockingQueue<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node node = queue.remove();
+            System.out.println(node.e);
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
         }
-        builder.append(this.generateDepthStr(depth)).append(node.e).append("\n");
-        this.preToString(node.left, depth + 1, builder);
-        this.preToString(node.right, depth + 1, builder);
     }
 
-    private String generateDepthStr(int depth) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < depth; i++) {
-            builder.append("--");
+    @Override
+    E minimum() {
+        if (root == null) {
+            return null;
         }
-        return builder.toString();
+        Node node = root;
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node.e;
     }
+
+    @Override
+    E maximum() {
+        return null;
+    }
+
+    @Override
+    E removeMin() {
+        return null;
+    }
+
+    @Override
+    E removeMax() {
+        return null;
+    }
+
+    @Override
+    boolean remove(E e) {
+        return false;
+    }
+
+
 }

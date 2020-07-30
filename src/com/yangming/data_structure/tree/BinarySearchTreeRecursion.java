@@ -54,6 +54,83 @@ public class BinarySearchTreeRecursion<E extends Comparable<E>> extends Abstract
         this.postOrder(root);
     }
 
+    @Override
+    void levelOrder() {
+
+    }
+
+    @Override
+    E minimum() {
+        return minimum(root);
+    }
+
+    @Override
+    E maximum() {
+        return maximum(root);
+    }
+
+    @Override
+    E removeMin() {
+        E minimum = minimum();
+        root = removeMin(root);
+        return minimum;
+    }
+
+    @Override
+    E removeMax() {
+        E max = maximum();
+        root.right = this.removeMax(root);
+        return max;
+    }
+
+    @Override
+    boolean remove(E e) {
+        return false;
+    }
+
+    private Node removeMax(Node node) {
+        if (node.right == null) {
+            Node leftNode = node.left;
+            node.left = null;
+            size--;
+            return leftNode;
+        }
+        node.right = this.removeMax(node.right);
+        return node;
+    }
+
+    /**
+     * 删除当前树的最小节点，返回删除节点后新的树的根
+     *
+     * @param node 当前树的根节点
+     * @return 除节点后新的树的根
+     */
+    private Node removeMin(Node node) {
+        if (node.left == null) {
+            Node rightNode = node.right;
+            node.right = null;
+            size--;
+            return rightNode;
+        }
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    private E maximum(Node node) {
+        if (node.right == null) {
+            return node.e;
+        }
+        return maximum(node.right);
+    }
+
+    private E minimum(Node node) {
+        if (node.left == null) {
+            return node.e;
+        }
+        return minimum(node.left);
+    }
+
+
     private Node add(Node node, E e) {
         if (node == null) {
             size++;
@@ -107,35 +184,4 @@ public class BinarySearchTreeRecursion<E extends Comparable<E>> extends Abstract
         System.out.println(node.e);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        this.preToString(root, 0, builder);
-        return builder.toString();
-    }
-
-    /**
-     * 前序遍历打印二叉树
-     *
-     * @param node    当前节点
-     * @param depth   当前节点所在层数
-     * @param builder 字符串
-     */
-    private void preToString(Node node, int depth, StringBuilder builder) {
-        if (node == null) {
-            builder.append(this.generateDepthStr(depth)).append("null\n");
-            return;
-        }
-        builder.append(this.generateDepthStr(depth)).append(node.e).append("\n");
-        this.preToString(node.left, depth + 1, builder);
-        this.preToString(node.right, depth + 1, builder);
-    }
-
-    private String generateDepthStr(int depth) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < depth; i++) {
-            builder.append("--");
-        }
-        return builder.toString();
-    }
 }
