@@ -1,4 +1,7 @@
-package com.yangming.data_structure.tree;
+package com.yangming.data_structure.tree.binary.search.tree;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 二分搜索树
@@ -53,7 +56,7 @@ public abstract class AbstractBinarySearchTree<E extends Comparable<E>> {
      *
      * @param e 要添加的元素
      */
-    abstract void add(E e);
+    public abstract void add(E e);
 
     /**
      * 查找二叉树中是否有该元素
@@ -61,55 +64,55 @@ public abstract class AbstractBinarySearchTree<E extends Comparable<E>> {
      * @param e 要查找的元素
      * @return 是否有该元素
      */
-    abstract boolean contains(E e);
+    public abstract boolean contains(E e);
 
     /**
      * 前序遍历
      */
-    abstract void preOrder();
+    public abstract void preOrder();
 
     /**
      * 中序遍历
      */
-    abstract void inOrder();
+    public abstract void inOrder();
 
     /**
      * 后序遍历
      */
-    abstract void postOrder();
+    public abstract void postOrder();
 
     /**
      * 层序遍历
      */
-    abstract void levelOrder();
+    public abstract void levelOrder();
 
     /**
      * 寻找二分搜索树的最小值
      *
      * @return 二分搜索树的最小值
      */
-    abstract E minimum();
+    public abstract E minimum();
 
     /**
      * 寻找二分搜索树的最大值
      *
      * @return 二分搜索树的最大值
      */
-    abstract E maximum();
+    public abstract E maximum();
 
     /**
      * 删除最小值
      *
      * @return 最小值
      */
-    abstract E removeMin();
+    public abstract E removeMin();
 
     /**
      * 删除最大值
      *
      * @return 最大值
      */
-    abstract E removeMax();
+    public abstract E removeMax();
 
     /**
      * 删除指定的元素
@@ -117,38 +120,40 @@ public abstract class AbstractBinarySearchTree<E extends Comparable<E>> {
      * @param e 要删除的元素
      * @return 是否删除成功
      */
-    abstract boolean remove(E e);
+    public abstract boolean remove(E e);
+
+    /**
+     * 获取树的高度
+     *
+     * @return 返回树的高度
+     */
+    public abstract int getHeight();
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        this.preToString(root, 0, builder);
+        Queue<Node> queue1 = new LinkedList<>();
+        queue1.add(root);
+        printLevel(queue1, builder);
         return builder.toString();
     }
 
-    /**
-     * 前序遍历打印二叉树
-     *
-     * @param node    当前节点
-     * @param depth   当前节点所在层数
-     * @param builder 字符串
-     */
-    private void preToString(Node node, int depth, StringBuilder builder) {
-        if (node == null) {
-            builder.append(this.generateDepthStr(depth)).append("null\n");
-            return;
+    private void printLevel(Queue<Node> queue, StringBuilder builder) {
+        Queue<Node> newQueue = new LinkedList<>();
+        while (!queue.isEmpty()) {
+            Node node = queue.remove();
+            builder.append(node.e).append(" ");
+            if (node.left != null) {
+                newQueue.add(node.left);
+            }
+            if (node.right != null) {
+                newQueue.add(node.right);
+            }
         }
-        builder.append(this.generateDepthStr(depth)).append(node.e).append("\n");
-        this.preToString(node.left, depth + 1, builder);
-        this.preToString(node.right, depth + 1, builder);
-    }
-
-    private String generateDepthStr(int depth) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < depth; i++) {
-            builder.append("--");
+        builder.append("\n");
+        while (!newQueue.isEmpty()) {
+            printLevel(newQueue, builder);
         }
-        return builder.toString();
     }
 
 }

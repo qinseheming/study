@@ -1,4 +1,4 @@
-package com.yangming.data_structure.tree;
+package com.yangming.data_structure.tree.binary.search.tree;
 
 /**
  * 递归方式实现二叉树
@@ -55,37 +55,49 @@ public class BinarySearchTreeRecursion<E extends Comparable<E>> extends Abstract
     }
 
     @Override
-    void levelOrder() {
+    public void levelOrder() {
 
     }
 
     @Override
-    E minimum() {
+    public E minimum() {
         return minimum(root);
     }
 
     @Override
-    E maximum() {
+    public E maximum() {
         return maximum(root);
     }
 
     @Override
-    E removeMin() {
+    public E removeMin() {
         E minimum = minimum();
         root = removeMin(root);
         return minimum;
     }
 
     @Override
-    E removeMax() {
+    public E removeMax() {
         E max = maximum();
         root.right = this.removeMax(root);
         return max;
     }
 
     @Override
-    boolean remove(E e) {
+    public boolean remove(E e) {
         return false;
+    }
+
+    @Override
+    public int getHeight() {
+        return getHeight(root);
+    }
+
+    private int getHeight(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + Math.max(getHeight(node.left), getHeight(node.right));
     }
 
     private Node removeMax(Node node) {

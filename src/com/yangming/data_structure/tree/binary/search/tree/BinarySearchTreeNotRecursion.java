@@ -1,4 +1,4 @@
-package com.yangming.data_structure.tree;
+package com.yangming.data_structure.tree.binary.search.tree;
 
 import java.util.Queue;
 import java.util.Stack;
@@ -97,7 +97,7 @@ public class BinarySearchTreeNotRecursion<E extends Comparable<E>> extends Abstr
      * 层序遍历
      */
     @Override
-    void levelOrder() {
+    public void levelOrder() {
         Queue<Node> queue = new LinkedBlockingQueue<>();
         queue.add(root);
         while (!queue.isEmpty()) {
@@ -113,7 +113,7 @@ public class BinarySearchTreeNotRecursion<E extends Comparable<E>> extends Abstr
     }
 
     @Override
-    E minimum() {
+    public E minimum() {
         if (root == null) {
             return null;
         }
@@ -125,23 +125,28 @@ public class BinarySearchTreeNotRecursion<E extends Comparable<E>> extends Abstr
     }
 
     @Override
-    E maximum() {
+    public E maximum() {
         return null;
     }
 
     @Override
-    E removeMin() {
+    public E removeMin() {
         return null;
     }
 
     @Override
-    E removeMax() {
+    public E removeMax() {
         return null;
     }
 
     @Override
-    boolean remove(E e) {
+    public boolean remove(E e) {
         return false;
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
     }
 
 

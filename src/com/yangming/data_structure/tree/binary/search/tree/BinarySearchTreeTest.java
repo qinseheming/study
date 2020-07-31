@@ -1,4 +1,4 @@
-package com.yangming.data_structure.tree;
+package com.yangming.data_structure.tree.binary.search.tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.Random;
 public class BinarySearchTreeTest {
 
     public static void main(String[] args) {
-//        testBinarySearchTreeRecursion();
+        testBinarySearchTreeRecursion();
 //        testBinarySearchTreeNotRecursion();
-        testRemove();
+//        testRemove();
     }
 
     /**
@@ -25,10 +25,7 @@ public class BinarySearchTreeTest {
         for (int i : arr) {
             tree.add(i);
         }
-        tree.preOrder();
-        System.out.println("最小值：" + tree.minimum());
-        tree.removeMin();
-        tree.preOrder();
+        System.out.println(tree);
     }
 
     /**
