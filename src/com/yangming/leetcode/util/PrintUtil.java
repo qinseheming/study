@@ -1,6 +1,10 @@
 package com.yangming.leetcode.util;
 
 import com.yangming.leetcode.ListNode;
+import com.yangming.leetcode.TreeNode;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author yangming
@@ -37,6 +41,33 @@ public class PrintUtil {
             builder.append(i).append(", ");
         }
         builder.deleteCharAt(builder.lastIndexOf(", "));
+        builder.append("]");
+        System.out.println(builder.toString());
+    }
+
+    public static void printTree(TreeNode root) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        builder.append(root.val).append(",");
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.remove();
+            if (node.left != null) {
+                queue.add(node.left);
+                builder.append(node.left.val);
+            } else {
+                builder.append("null");
+            }
+            builder.append(",");
+            if (node.right != null) {
+                queue.add(node.right);
+                builder.append(node.right.val);
+            } else {
+                builder.append("null");
+            }
+            builder.append(",");
+        }
         builder.append("]");
         System.out.println(builder.toString());
     }
